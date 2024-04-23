@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Program Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="true">Add Program</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Program List</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <!-- Add Program Tab -->
+        <div class="tab-pane fade show active" id="add" role="tabpanel" aria-labelledby="add-tab">
+            <div class="container mt-3">
+                <h2>Add Program</h2>
+                <form action="/programs/add" method="post" th:object="${program}">
+                    <div class="form-group">
+                        <label for="program_Code">Program Code:</label>
+                        <input type="text" class="form-control" id="program_Code" name="program_Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="program_name">Program Name:</label>
+                        <input type="text" class="form-control" id="program_name" name="program_name"  required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courses">Courses:</label>
+                        <select class="form-control" id="courses" name="courses" multiple="multiple" >
+                            <option th:each="course : ${courses}" th:value="${course.course_id}" th:text="${course.course_name}" ></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        <!-- Program List Tab -->
+        <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+            <div class="container mt-3">
+                <h2>Program List</h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Program Code</th>
+                        <th>Program Name</th>
+                        <th>Number of Courses</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="program : ${programs}">
+                        <td th:text="${program.program_Code}"></td>
+                        <td th:text="${program.program_name}"></td>
+                        <td th:text="${program.courses.size()}"></td>
+                        <td>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editModal">Edit</a>
+                            <!-- Add other actions (delete, view details, etc.) as needed -->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Edit Program Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit Program</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Include edit form here -->
+                            <!-- You can reuse the add-program.html form with slight modifications -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

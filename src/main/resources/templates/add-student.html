@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Add Student</h2>
+    <form action="/students/add" method="post" th:object="${student}">
+        <div class="form-group">
+            <label for="reg_number">Registration Number:</label>
+            <input type="text" class="form-control" id="reg_number" name="reg_number" required>
+        </div>
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" class="form-control" id="first_name" name="first_name"  required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" class="form-control" id="last_name" name="last_name"required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="program">Program:</label>
+            <select class="form-control" id="program" name="program">
+                <option th:each="program : ${programs}" th:value="${program.program_Id}" th:text="${program.program_name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="semester">Semester:</label>
+            <select class="form-control" id="semester" name="semester">
+                <option th:each="semester : ${semesters}" th:value="${semester.semester_id}" th:text="${semester.semester_name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="courses">Courses:</label>
+            <select class="form-control" id="courses" name="courses" multiple="multiple">
+                <option th:each="course : ${courses}" th:value="${course.course_id}" th:text="${course.course_name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
