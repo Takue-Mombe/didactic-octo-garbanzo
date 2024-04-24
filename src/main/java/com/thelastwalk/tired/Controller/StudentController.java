@@ -52,10 +52,11 @@ public class StudentController {
             // Handle validation errors
             return "add-student";
         }
-        studentService.saveStudent(student);
+        Students savedStudents=studentService.saveStudent(student);
+        System.out.println("Student of Id: "+savedStudents.getReg_number()+" saved");
         redirectAttributes.addFlashAttribute("successMessage", "Student added successfully.");
         model.addAttribute("student", student); // Add the student object to pass to the My Space page
-        return "redirect:/students/my-space";
+        return "my-space";
     }
 
 

@@ -25,6 +25,7 @@ public class ProgramController {
     @GetMapping("/list")
     public String listPrograms(Model model) {
         List<Programs> programs = programService.getAllPrograms();
+        model.addAttribute("courses", courseService.getAllCourses());
         model.addAttribute("programs", programs);
         return "ProgramList";
     }
@@ -32,7 +33,6 @@ public class ProgramController {
     @GetMapping("/add")
     public String showAddProgramForm(Model model) {
         model.addAttribute("program", new Programs());
-        model.addAttribute("courses", courseService.getAllCourses());
         return "ProgramList";
     }
 

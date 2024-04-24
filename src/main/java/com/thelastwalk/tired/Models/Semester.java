@@ -20,8 +20,6 @@ public class Semester {
 
     @OneToMany(mappedBy = "semester")
     private List<Students> students = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "program_id")
-    private Programs program;
+
 
 }

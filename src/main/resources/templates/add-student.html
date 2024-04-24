@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <label for="last_name">Last Name:</label>
-            <input type="text" class="form-control" id="last_name" name="last_name"required>
+            <input type="text" class="form-control" id="last_name" name="last_name" required>
         </div>
         <div class="form-group">
             <label for="phone">Phone:</label>
@@ -27,13 +27,13 @@
         </div>
         <div class="form-group">
             <label for="program">Program:</label>
-            <select class="form-control" id="program" name="program">
+            <select class="form-control" id="program" name="program" th:onchange="'/students/courses/' + this.value + '/' + document.getElementById('semester').value">
                 <option th:each="program : ${programs}" th:value="${program.program_Id}" th:text="${program.program_name}"></option>
             </select>
         </div>
         <div class="form-group">
             <label for="semester">Semester:</label>
-            <select class="form-control" id="semester" name="semester">
+            <select class="form-control" id="semester" name="semester" th:onchange="'/students/courses/' + document.getElementById('program').value + '/' + this.value">
                 <option th:each="semester : ${semesters}" th:value="${semester.semester_id}" th:text="${semester.semester_name}"></option>
             </select>
         </div>
@@ -46,5 +46,36 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<script>
+    // Initialize courses based on the selected program and semester
+    var programId = document.getElementById("program").value;
+    var semesterId = document.getElementById("semester").value;
+    var coursesDropdown = document.getElementById("courses");
+    var coursesUrl = '/students/courses/' + programId + '/' + semesterId;
+    fetch(coursesUrl)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(course => {
+                coursesDropdown.innerHTML += "<option value='" + course.course_id + "'>" + course.course_name + "</option>";
+            });
+        });
+
+    // Update courses when program or semester changes
+    function updateCourses() {
+        var programId = document.getElementById("program").value;
+        var semesterId = document.getElementById("semester").value;
+        var coursesDropdown = document.getElementById("courses");
+        var coursesUrl = '/students/courses/' + programId + '/' + semesterId;
+        coursesDropdown.innerHTML = ""; // Clear previous options
+        fetch(coursesUrl)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(course => {
+                    coursesDropdown.innerHTML += "<option value='" + course.course_id + "'>" + course.course_name + "</option>";
+                });
+            });
+    }
+</script>
 </body>
 </html>

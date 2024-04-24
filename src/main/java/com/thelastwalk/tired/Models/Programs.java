@@ -21,15 +21,9 @@ public class Programs {
     private String program_name;
     @OneToMany(mappedBy = "program")
     private List<Students> students = new ArrayList<>();
-    @OneToMany(mappedBy = "program")
-    private List<Semester> semester = new ArrayList<>();
     @ManyToMany
     @JoinTable(name = "program_course",
             joinColumns = @JoinColumn(name = "program_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Courses> courses = new ArrayList<>();
-
-    public int getSemesterCount() {
-        return semester.size();
-    }
 }

@@ -32,7 +32,6 @@ public class SemesterController {
     @GetMapping("/add")
     public String showAddSemesterForm(Model model) {
         model.addAttribute("semester", new Semester());
-        model.addAttribute("programs", programService.getAllPrograms());
         return "semesterlist";
     }
 
