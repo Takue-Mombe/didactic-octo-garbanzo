@@ -80,6 +80,13 @@ public class CourseController {
         redirectAttributes.addFlashAttribute("successMessage", "Course added successfully.");
         return "redirect:/courses/list";
     }
+    @PostMapping("/delete")
+    public String deleteCourse(@RequestParam("course_id") Long courseId) {
+        System.out.println("Deleting course with ID: " + courseId);
+        courseService.deleteCourse(courseId);
 
+
+        return "redirect:/courses/list";
+    }
 }
 

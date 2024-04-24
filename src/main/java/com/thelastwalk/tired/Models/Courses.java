@@ -28,5 +28,10 @@ public class Courses {
     private List<Programs> programs = new ArrayList<>();
     @ManyToMany(mappedBy = "courses")
     private List<Students> students = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "course_lecturers",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "lecturer_id"))
+    private List<Lecturers> lecturers = new ArrayList<>();
 
 }
