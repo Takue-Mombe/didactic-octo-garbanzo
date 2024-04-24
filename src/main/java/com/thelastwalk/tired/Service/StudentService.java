@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,11 @@ public class StudentService {
     public List<Students> getAllStudents() {
         return studentRepository.findAll();
     }
+
     public List<Students> getStudentsByCourse(List<Courses> courses) {
         return studentRepository.findByCoursesIn(courses);
     }
+
     public Optional<Students> getStudentById(Long id) {
         return studentRepository.findById(id);
     }
@@ -38,8 +41,13 @@ public class StudentService {
 
 
     public List<Students> getStudentsByCourseId(Long courseId) {
-        Courses course = courseRepository.findByCourse_id(courseId);
+        Optional<Courses> courseOptional = courseRepository.findById(courseId);
 
-        return course.getStudents();
+        if (courseOptional.isPresent()) {
+            Courses course = courseOptional.get();
+            return course.getStudents();
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
