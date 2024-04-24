@@ -23,7 +23,9 @@ public class CourseService {
     public List<Courses> getAllCourses() {
         return courseRepository.findAll();
     }
-
+    public List<Courses> getCoursesByIds(List<Long> courseIds) {
+        return courseRepository.findAllById(courseIds);
+    }
 
 
 

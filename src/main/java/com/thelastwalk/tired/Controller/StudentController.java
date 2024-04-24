@@ -36,6 +36,7 @@ public class StudentController {
         return "student-list";
     }
 
+
     @GetMapping("/add")
     public String showAddStudentForm(Model model) {
         model.addAttribute("student", new Students());
